@@ -42,10 +42,13 @@ class BirthdayListVM(private val repository: PersonRepository) : AppVM() {
     ) {
         if (personList.value == null) {
             repository.getPeople()
+                .map {
+                    getPersonList(it.person())
+                }
                 .subscribeOn(subscribeOnScheduler)
                 .observeOn(observeOnScheduler)
                 .subscribeWithErrorHandling {
-                    _personList.postValue(getPersonList(it.person()))
+                    _personList.postValue(it)
                 }
                 .addToDisposable()
         }
