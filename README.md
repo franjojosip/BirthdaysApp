@@ -18,4 +18,8 @@ git clone https://github.com/franjojosip/BirthdaysApp
 ## Build variants
 This project contains "debug" and "release" with the same API url
 
+## Additional classes
+- SingleLiveData - for Navigation events
+- AppVM - handle observable with error handling and handle diposables inside ViewModel
+
 
