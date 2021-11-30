@@ -8,5 +8,16 @@
         android:id="@+id/birthday_list_fragment"
         android:name="com.fjjukic.birthdaysapp.birthday_list.view.BirthdayListFragment"
         android:label="BirthdayListFragment"
-        tools:layout="@layout/fragment_birthday_list" />
+        tools:layout="@layout/fragment_birthday_list">
+        <action
+            android:id="@+id/action_birthday_list_to_single"
+            app:destination="@+id/single_birthday_fragment"
+            app:popUpTo="@id/birthday_list_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/single_birthday_fragment"
+        android:name="com.fjjukic.birthdaysapp.single_birthday.view.SingleBirthdayFragment"
+        android:label="SingleBirthdayFragment"
+        tools:layout="@layout/fragment_single_birthday" />
 </navigation>
