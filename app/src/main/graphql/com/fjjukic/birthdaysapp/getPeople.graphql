@@ -1,0 +1,7 @@
+query GetPeople {
+    person {
+        id
+        name
+        date_of_birth
+    }
+}
