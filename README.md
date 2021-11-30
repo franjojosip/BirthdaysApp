@@ -19,7 +19,7 @@ git clone https://github.com/franjojosip/BirthdaysApp
 This project contains "debug" and "release" with the same API url
 
 ## Additional classes
-- SingleLiveData - for Navigation events
+- SingleLiveData - for Navigation events (handle events only once, without triggering again after rotation etc.)
 - AppVM - handle observable with error handling and handle diposables inside ViewModel
 
 ## Utils
@@ -37,3 +37,6 @@ query {
 }
 ```
 - Each data from the obtained list from the server is mapped to PersonUI object used on UI
+
+## Documentation
+- Application is well commented which helps to understand features and their implementation
