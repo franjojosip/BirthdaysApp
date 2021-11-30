@@ -6,6 +6,12 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 
+
+/**
+ * AppVM class provides extensions for error handling and maintaining disposables
+ *
+ * @property compositeDisposable - disposable container which has to be cleared after clearing ViewModel
+ */
 abstract class AppVM : ViewModel() {
     private var compositeDisposable = CompositeDisposable()
 
