@@ -39,4 +39,4 @@ query {
 - Each data from the obtained list from the server is mapped to PersonUI object used on UI
 
 ## Documentation
-- Application is well commented which helps to understand features and their implementation
+- Application contains comments which help to understand features and their implementation inside the application
