@@ -9,12 +9,11 @@ git clone https://github.com/franjojosip/BirthdaysApp
 
 ## Project setup and technologies
 - Arhictecture - MVVM architecture with LiveData and Observable
-- Koin DI
-- RxJava
-- NavigationComponent
-- Apollo for graphQL (Apollo + ApolloRxSupport)
+- Koin DI (reduce boilerplate)
+- RxJava (reactive programming)
+- NavigationComponent (simple navigation with navController)
+- Apollo for GraphQL (Apollo + ApolloRxSupport)
 - JUnit for basic test
-- DataBinding (Bind data to view, memory leaks are handled in Fragment OnDestroyView lifecycle method)
 
 ## Build variants
 This project contains "debug" and "release" with the same API url
@@ -23,15 +22,18 @@ This project contains "debug" and "release" with the same API url
 - SingleLiveData - for Navigation events
 - AppVM - handle observable with error handling and handle diposables inside ViewModel
 
-## Resources
-- Project uses Roboto fonts
+## Utils
+- DateConverter Util required for converting server date and handling convert age to string used on UI
 
-
-## Features
-- Birthday List screen which contains list of people and their birthdays
-- Click on person opens SingleBirthday screen which shows person data
-
-## Testing
-- This project contain PersonRepositoryTest which is not fully implemented (test with Koin DI should be used)
-
-
+## API
+- GraphQL querry used for this application is shown below:
+```bash
+query {
+  person {
+    id
+    name
+    date_of_birth
+  }
+}
+```
+- Each data from the obtained list from the server is mapped to PersonUI object used on UI
