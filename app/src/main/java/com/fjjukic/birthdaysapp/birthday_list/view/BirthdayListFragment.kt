@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fjjukic.birthdaysapp.base.utils.observeNotNull
 import com.fjjukic.birthdaysapp.birthday_list.adapter.BirthdayListRecyclerAdapter
 import com.fjjukic.birthdaysapp.birthday_list.listener.OnItemClickedListener
 import com.fjjukic.birthdaysapp.birthday_list.model.PersonUI
@@ -53,6 +53,9 @@ class BirthdayListFragment : Fragment() {
         return binding?.root
     }
 
+    /**
+     * Call methods to set UI components and observers
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
@@ -80,10 +83,10 @@ class BirthdayListFragment : Fragment() {
      * SetUp observers for data changes and if navigation event occur
      */
     private fun setUpObservers() {
-        viewModel.personList.observeNotNull {
+        viewModel.personList.observeNotNull(viewLifecycleOwner) {
             adapter.setData(it.toMutableList())
         }
-        viewModel.navDirections.observeNotNull {
+        viewModel.navDirections.observeNotNull(viewLifecycleOwner)  {
             findNavController().navigate(it)
         }
     }
@@ -94,14 +97,5 @@ class BirthdayListFragment : Fragment() {
     override fun onDestroyView() {
         binding = null
         super.onDestroyView()
-    }
-
-    /**
-     * Extension used for filtering null values from LiveData
-     */
-    private fun <T> LiveData<T>.observeNotNull(observer: (t: T) -> Unit) {
-        this.observe(viewLifecycleOwner) {
-            it.let(observer)
-        }
     }
 }

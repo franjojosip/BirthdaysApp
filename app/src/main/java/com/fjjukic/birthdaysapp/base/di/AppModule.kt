@@ -5,6 +5,7 @@ import com.fjjukic.birthdaysapp.BuildConfig
 import com.fjjukic.birthdaysapp.birthday_list.repository.PersonRepository
 import com.fjjukic.birthdaysapp.birthday_list.repository.PersonRepositoryImpl
 import com.fjjukic.birthdaysapp.birthday_list.view_model.BirthdayListVM
+import com.fjjukic.birthdaysapp.single_birthday.view_model.SingleBirthdayVM
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -14,6 +15,7 @@ val appModule = module {
     single<PersonRepository> { PersonRepositoryImpl(get()) }
 
     viewModel { BirthdayListVM(get()) }
+    viewModel { SingleBirthdayVM() }
 }
 
 object ApolloConnector {
