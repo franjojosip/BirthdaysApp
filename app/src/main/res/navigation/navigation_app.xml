@@ -1,0 +1,12 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_app"
+    app:startDestination="@id/birthday_list_fragment">
+
+    <fragment
+        android:id="@+id/birthday_list_fragment"
+        android:name="com.fjjukic.birthdaysapp.birthday_list.view.BirthdayListFragment"
+        android:label="BirthdayListFragment"
+        tools:layout="@layout/fragment_birthday_list" />
+</navigation>
