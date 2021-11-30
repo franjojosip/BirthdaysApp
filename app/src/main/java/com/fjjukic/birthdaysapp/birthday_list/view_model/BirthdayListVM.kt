@@ -53,6 +53,7 @@ class BirthdayListVM(private val repository: PersonRepository) : AppVM() {
     /**
      * Prepare data from server for UI
      * Handles empty data received from server
+     * Sort by date descending
      *
      * @param data - data received from server
      */
@@ -64,11 +65,12 @@ class BirthdayListVM(private val repository: PersonRepository) : AppVM() {
                     PersonUI(
                         initials = getInitials(person.name()),
                         name = person.name(),
-                        dateOfBirth = DateConverter.formatString(person.date_of_birth().toString()),
-                        isFirstRow = index == 0
+                        dateOfBirth = DateConverter.formatString(person.date_of_birth().toString())
                     )
                 }.sortedByDescending {
                     DateConverter.convertStringToDate(it.dateOfBirth)
+                }.apply {
+                    first().isFirstRow = true
                 }
             }
         }

@@ -7,5 +7,5 @@ data class PersonUI(
     val initials: String,
     val name: String,
     val dateOfBirth: String,
-    val isFirstRow: Boolean = false
+    var isFirstRow: Boolean = false
 )
