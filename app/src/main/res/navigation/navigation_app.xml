@@ -12,12 +12,32 @@
         <action
             android:id="@+id/action_birthday_list_to_single"
             app:destination="@+id/single_birthday_fragment"
-            app:popUpTo="@id/birthday_list_fragment" />
+            app:popUpTo="@id/birthday_list_fragment">
+            <argument
+                android:name="initials"
+                app:argType="string" />
+            <argument
+                android:name="name"
+                app:argType="string" />
+            <argument
+                android:name="years"
+                app:argType="string" />
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/single_birthday_fragment"
         android:name="com.fjjukic.birthdaysapp.single_birthday.view.SingleBirthdayFragment"
         android:label="SingleBirthdayFragment"
-        tools:layout="@layout/fragment_single_birthday" />
+        tools:layout="@layout/fragment_single_birthday">
+        <argument
+            android:name="initials"
+            app:argType="string" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="years"
+            app:argType="string" />
+    </fragment>
 </navigation>

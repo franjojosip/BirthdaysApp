@@ -9,6 +9,7 @@ import com.fjjukic.birthdaysapp.base.utils.DateConverter
 import com.fjjukic.birthdaysapp.base.view_model.AppVM
 import com.fjjukic.birthdaysapp.birthday_list.model.PersonUI
 import com.fjjukic.birthdaysapp.birthday_list.repository.PersonRepository
+import com.fjjukic.birthdaysapp.birthday_list.view.BirthdayListFragmentDirections
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -90,10 +91,16 @@ class BirthdayListVM(private val repository: PersonRepository) : AppVM() {
     }
 
     /**
-     * Handle item clicked
+     * Handle item clicked and create NavDirections for navigation to BirthdaySingle
      * @param data - represents clicked person from UI
      */
     fun handleItemClicked(data: PersonUI) {
-        // TODO Handle navigation on person clicked
+        navDirections.postValue(
+            BirthdayListFragmentDirections.actionBirthdayListToSingle(
+                initials = data.initials,
+                name = data.name,
+                years = data.dateOfBirth
+            )
+        )
     }
 }
