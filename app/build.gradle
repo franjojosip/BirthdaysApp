@@ -44,7 +44,7 @@ android {
             buildConfigField 'String', 'API_URL', '"https://birthday-api.hasura.app/v1/graphql"'
         }
     }
-    dataBinding {
+    viewBinding {
         enabled = true
     }
 }

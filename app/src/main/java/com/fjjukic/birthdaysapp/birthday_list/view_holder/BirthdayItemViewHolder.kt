@@ -1,10 +1,10 @@
 package com.fjjukic.birthdaysapp.birthday_list.view_holder
 
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.fjjukic.birthdaysapp.birthday_list.listener.OnItemClickedListener
 import com.fjjukic.birthdaysapp.birthday_list.model.PersonUI
 import com.fjjukic.birthdaysapp.databinding.CellBirthdayItemBinding
-
 
 /**
  * ViewHolder class which represents birthday item showed on UI
@@ -17,7 +17,7 @@ class BirthdayItemViewHolder(private val binding: CellBirthdayItemBinding) :
         binding.tvInitials.text = data.initials
         binding.tvName.text = data.name
         binding.tvDateOfBirth.text = data.dateOfBirth
-        binding.isFirstRow = data.isFirstRow
+        binding.tvTopBorder.isVisible = data.isFirstRow
         binding.root.setOnClickListener {
             listener.onClicked(data)
         }

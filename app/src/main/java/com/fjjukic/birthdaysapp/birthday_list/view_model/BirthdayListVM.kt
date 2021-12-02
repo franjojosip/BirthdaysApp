@@ -25,33 +25,39 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  */
 
 class BirthdayListVM(private val repository: PersonRepository) : AppVM() {
-    val navDirections: SingleLiveData<NavDirections> by lazy { SingleLiveData() }
-    private val _personList: MutableLiveData<List<PersonUI>> by lazy { MutableLiveData() }
+
+    private val _navDirections = SingleLiveData<NavDirections>()
+    val navDirections: LiveData<NavDirections> = _navDirections
+
+    private val _personList = MutableLiveData<List<PersonUI>>()
     val personList: LiveData<List<PersonUI>> = _personList
 
     /**
      * Initialize data with API call if there is no data saved in ViewModel
      * Error is handled with extension and added to disposable
      *
-     * @param subscribeOnScheduler - set thread used for operation
-     * @param subscribeOnScheduler - set thread used to emit data to subscribers
+     * @param subscribeOnScheduler - set thread used for IO (network call)
+     * @param subscribeOnWorkScheduler - set thread used for mapping, work, etc.
+     * @param observeOnScheduler - set thread used to emit data to subscribers
      */
     fun initData(
         subscribeOnScheduler: Scheduler = Schedulers.io(),
+        subscribeOnWorkScheduler: Scheduler = Schedulers.computation(),
         observeOnScheduler: Scheduler = AndroidSchedulers.mainThread()
     ) {
-        if (personList.value == null) {
-            repository.getPeople()
-                .map {
-                    getPersonList(it.person())
-                }
-                .subscribeOn(subscribeOnScheduler)
-                .observeOn(observeOnScheduler)
-                .subscribeWithErrorHandling {
-                    _personList.postValue(it)
-                }
-                .addToDisposable()
-        }
+        if (personList.value != null) return
+
+        repository.getPeople()
+            .subscribeOn(subscribeOnScheduler)
+            .map {
+                getPersonList(it.person())
+            }
+            .subscribeOn(subscribeOnWorkScheduler)
+            .observeOn(observeOnScheduler)
+            .subscribeWithErrorHandling {
+                _personList.value = it
+            }
+            .addToDisposable()
     }
 
     /**
@@ -65,7 +71,7 @@ class BirthdayListVM(private val repository: PersonRepository) : AppVM() {
         return when {
             data.isNullOrEmpty() -> mutableListOf()
             else -> {
-                data.mapIndexed { index, person ->
+                data.map { person ->
                     PersonUI(
                         initials = getInitials(person.name()),
                         name = person.name(),
@@ -85,12 +91,11 @@ class BirthdayListVM(private val repository: PersonRepository) : AppVM() {
      * @param name
      */
     private fun getInitials(name: String): String {
-        if (name.isEmpty()) return ""
-        val nameArray = name.split(" ").map { it[0].toString() }
-        return when (nameArray.size) {
-            1 -> nameArray.first()
-            else -> "${nameArray[0]}${nameArray[1]}"
-        }
+        return name.split(" ", limit = 2)
+            .filter { it.isNotEmpty() }
+            .map { it.first() }
+            .joinToString("")
+            .uppercase()
     }
 
     /**
@@ -98,7 +103,7 @@ class BirthdayListVM(private val repository: PersonRepository) : AppVM() {
      * @param data - represents clicked person from UI
      */
     fun handleItemClicked(data: PersonUI) {
-        navDirections.postValue(
+        _navDirections.setValue(
             BirthdayListFragmentDirections.actionBirthdayListToSingle(
                 initials = data.initials,
                 name = data.name,

@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fjjukic.birthdaysapp.base.fragment.AppFragment
 import com.fjjukic.birthdaysapp.base.utils.observeNotNull
 import com.fjjukic.birthdaysapp.birthday_list.adapter.BirthdayListRecyclerAdapter
 import com.fjjukic.birthdaysapp.birthday_list.listener.OnItemClickedListener
@@ -18,12 +18,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  * View for birthday list
  *
- * @property binding - access to layout through data binding
  * @property adapter - adapter used on RecyclerView to show data
  * @property viewModel - viewModel class from which data is observed, used with Koin DI
  */
-class BirthdayListFragment : Fragment() {
-    private var binding: FragmentBirthdayListBinding? = null
+class BirthdayListFragment : AppFragment<FragmentBirthdayListBinding>() {
+
     private lateinit var adapter: BirthdayListRecyclerAdapter
     private val viewModel: BirthdayListVM by viewModel()
 
@@ -42,15 +41,13 @@ class BirthdayListFragment : Fragment() {
     }
 
     /**
-     * Create data binding
+     * Create view binding
      */
-    override fun onCreateView(
+    override fun setupViewBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentBirthdayListBinding.inflate(inflater, container, false)
-        return binding?.root
+        container: ViewGroup?
+    ): FragmentBirthdayListBinding {
+        return FragmentBirthdayListBinding.inflate(inflater, container, false)
     }
 
     /**
@@ -74,9 +71,9 @@ class BirthdayListFragment : Fragment() {
      * SetUp RecyclerView layout manager and adapter
      */
     private fun setUpRecyclerView() {
-        binding?.recyclerView?.layoutManager =
+        binding.recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding?.recyclerView?.adapter = adapter
+        binding.recyclerView.adapter = adapter
     }
 
     /**
@@ -86,16 +83,8 @@ class BirthdayListFragment : Fragment() {
         viewModel.personList.observeNotNull(viewLifecycleOwner) {
             adapter.setData(it.toMutableList())
         }
-        viewModel.navDirections.observeNotNull(viewLifecycleOwner)  {
+        viewModel.navDirections.observeNotNull(viewLifecycleOwner) {
             findNavController().navigate(it)
         }
-    }
-
-    /**
-     * Destroy binding to avoid memory leaks
-     */
-    override fun onDestroyView() {
-        binding = null
-        super.onDestroyView()
     }
 }
