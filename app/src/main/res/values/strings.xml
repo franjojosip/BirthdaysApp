@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">BirthdaysApp</string>
+    <string name="birthdays">Birthdays</string>
+    <string name="go_back">Go back</string>
+    <plurals name="quantity_years">
+        <item quantity="one">%d year old</item>
+        <item quantity="other">%d years old</item>
+    </plurals>
+    <plurals name="quantity_months">
+        <item quantity="one">%d month old</item>
+        <item quantity="other">%d months old</item>
+    </plurals>
+    <plurals name="quantity_days">
+        <item quantity="one">%d day old</item>
+        <item quantity="other">%d days old</item>
+    </plurals>
 </resources>
